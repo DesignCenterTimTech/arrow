@@ -34,6 +34,12 @@
 // which is initialized once by calling InitDatetime().
 #define PyDateTimeAPI ::arrow::py::internal::datetime_api
 
+// PyPy 7.3.9 have not exposed this for unknown reason
+// FIXME remove to avoid redefinition when this is fixed in PyPy
+#if defined(PYPY_VERSION)
+#define PyDateTime_CAPSULE_NAME "datetime.datetime_CAPI"
+#endif
+
 namespace arrow {
 namespace py {
 namespace internal {
