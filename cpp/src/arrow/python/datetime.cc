@@ -489,10 +489,18 @@ PyObject* MonthDayNanoIntervalToNamedTuple(
   if (ARROW_PREDICT_FALSE(tuple.obj() == nullptr)) {
     return nullptr;
   }
+  // PyPy 7.3.9 have not exposed PyStructSequence_SetItem into public API yet
+  #if defined(PYPY_VERSION)
+  PyStructSequence_SET_ITEM(tuple.obj(), /*pos=*/0, PyLong_FromLong(interval.months));
+  PyStructSequence_SET_ITEM(tuple.obj(), /*pos=*/1, PyLong_FromLong(interval.days));
+  PyStructSequence_SET_ITEM(tuple.obj(), /*pos=*/2,
+                           PyLong_FromLongLong(interval.nanoseconds));
+  #else
   PyStructSequence_SetItem(tuple.obj(), /*pos=*/0, PyLong_FromLong(interval.months));
   PyStructSequence_SetItem(tuple.obj(), /*pos=*/1, PyLong_FromLong(interval.days));
   PyStructSequence_SetItem(tuple.obj(), /*pos=*/2,
                            PyLong_FromLongLong(interval.nanoseconds));
+  #endif
   return tuple.detach();
 }
 
