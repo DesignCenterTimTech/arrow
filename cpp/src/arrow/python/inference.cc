@@ -393,7 +393,7 @@ class TypeInferrer {
       *keep_going = make_unions_;
     } else if (PyArray_CheckAnyScalarExact(obj)) {
       RETURN_NOT_OK(VisitDType(PyArray_DescrFromScalar(obj), keep_going));
-    } else if (PySet_Check(obj) \
+    } else if (PySet_Check(obj)
     #if !defined(PYPY_VERSION)
             || (Py_TYPE(obj) == &PyDictValues_Type)) {
     #else

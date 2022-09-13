@@ -748,7 +748,7 @@ class PyListConverter : public ListConverter<T, PyConverter, PyConverterTrait> {
       RETURN_NOT_OK(AppendNdarray(value));
     } else if (PySequence_Check(value)) {
       RETURN_NOT_OK(AppendSequence(value));
-    } else if (PySet_Check(value) \
+    } else if (PySet_Check(value)
     #if !defined(PYPY_VERSION)
                || (Py_TYPE(value) == &PyDictValues_Type)) {
     #else
